@@ -4,48 +4,50 @@
 import os
 import os.path as osp
 import glob
-import time
-import warnings
-import h5py 
-import argparse
+# import time
+# import warnings
+# import h5py
+# import argparse
 import numpy as np
 np.set_printoptions(suppress=True)
 import open3d as o3d
-import random 
+# import random
 import pickle as pkl
 from tqdm import tqdm
 from obj_loader import TriangleMesh
 
-
+sample_path = 'Ch03_nonPBR/Ch03_nonPBR.txt'
 # ***** 需要你补充的变量) ******
-manual_model_to_smpl = {}
+manual_model_to_smpl = {0:0,1:3,2:2,3:1,4:6,5:5,6:4,7:9,8:8,9:7,10:12,11:14,
+                        12:13,13:11,14:10,15:15,16:17,17:16,21:19,22:18,23:21,24:20}
+
 #(e.g.) manual_model_to_smpl = {0: 0, 1: 3, 2: 2, 3: 1, 4: 6, 5: 5, 6: 4, 7: 9, 8: 8, 9: 7, 10: 12, 11: 14, 12: 13, 21: 19, 22: 18, 23: 21, 24: 20, 16: 17, 17: 16}
 
 smpl_joint_names = [
-    "hips", 
-    "leftUpLeg", 
-    "rightUpLeg", 
-    "spine", 
-    "leftLeg", 
-    "rightLeg", 
-    "spine1", 
-    "leftFoot", 
-    "rightFoot", 
-    "spine2", 
-    "leftToeBase", 
-    "rightToeBase", 
-    "neck", 
-    "leftShoulder", 
-    "rightShoulder", 
-    "head", 
-    "leftArm", 
-    "rightArm", 
-    "leftForeArm", 
-    "rightForeArm", 
-    "leftHand", 
-    "rightHand", 
-    "leftHandIndex1"
-    "rightHandIndex1", 
+    "hips",         # 0
+    "leftUpLeg",    # 1
+    "rightUpLeg",   # 2
+    "spine",        # 3
+    "leftLeg",      # 4
+    "rightLeg",     # 5
+    "spine1",       # 6
+    "leftFoot",     # 7
+    "rightFoot",    # 8
+    "spine2",       # 9
+    "leftToeBase",  # 10
+    "rightToeBase", # 11
+    "neck",         # 12
+    "leftShoulder", # 13
+    "rightShoulder", # 14
+    "head",         # 15
+    "leftArm",      # 16
+    "rightArm",     # 17
+    "leftForeArm",  # 18
+    "rightForeArm", # 19
+    "leftHand",     # 20
+    "rightHand",    # 21
+    "leftHandIndex1",# 22
+    "rightHandIndex1", # 23
 ]
 
 def _lazy_get_model_to_smpl(_index2joint): 
@@ -318,7 +320,8 @@ def transfer_given_pose(human_pose, infoname, is_root_rotated=False):
     # linear blend skinning process, refer to SMPL paper for more details
     T = np.tensordot(weights.T, G, axes=[[1], [0]])
     rest_shape_h = np.hstack((v_posed, np.ones([v_posed.shape[0], 1])))
-    v = np.matmul(T, rest_shape_h.reshape([-1, 4, 1])).reshape([-1, 4])[:, :3]
+    v = np.matmul(T, rest_shape_h.reshape([-1, 4, 1]))
+    v = v.reshape([-1, 4])[:, :3]
 
     root_line = ["root {}".format(new_index2joint[0])]
     out_lines = new_joint_lines + root_line + skin_lines + hier_lines
@@ -393,7 +396,7 @@ def transfer_one_sequence(infofile, seqfile, use_online_model=False):
         # create symlink
         for _file in os.listdir(os.path.dirname(infofile)): 
             # for texture or material
-            if _file.endswith(".png") or _file.endswith(".mtl"): 
+            if _file.endswith(".png") or _file.endswith(".mtl"):
                 src_path = os.path.abspath(os.path.join(os.path.dirname(infofile), _file))
                 dst_path = os.path.join(savedir, _file)
                 if not osp.exists(dst_path): 
@@ -465,8 +468,11 @@ if __name__ == '__main__':
     # for provided models
     # transfer_one_frame("fbx/10559.txt")
     # transfer_one_sequence("fbx/10559.txt", "info_seq_5.pkl")
+    # clean_info(sample_path)
+    transfer_one_sequence(sample_path, "info_seq_5.pkl",use_online_model=True)
 
     # for possible model downloaded online
     # clean_info("samples/Ch14_nonPBR.txt")
-    transfer_one_frame("samples/Ch14_nonPBR.txt", use_online_model=True)
-    # transfer_one_sequence("samples/Ch14_nonPBR.txt", "info_seq_5.pkl", use_online_model=True)
+    # transfer_one_frame(sample_path, use_online_model=True)
+    # transfer_one_sequence("other", "info_seq_5.pkl", use_online_model=True)
+#

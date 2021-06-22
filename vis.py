@@ -11,7 +11,7 @@ import cv2
 import open3d as o3d 
 from tqdm import tqdm
 
-use_online_model = False
+use_online_model = True
 if not use_online_model and int(o3d.__version__.split('.')[1]) < 11:
     warnings.warn('You are using open3d below 0.11.0, which may cause black images in saving screen captures' + \
                      'you can use a video recorder to save the visualization, or switch to a newer version')
@@ -95,7 +95,7 @@ for idx in tbar:
     # visualizer.capture_screen_image(osp.join("vis", "{}.png".format(idx)), do_render=True)
     vis_save_path = osp.join(savedir, str(idx) + ".png")
     # img = np.asarray(visualizer.capture_screen_float_buffer()).copy()
-    visualizer.capture_screen_image(vis_save_path, True)
+    visualizer.capture_screen_image(vis_save_path)
 
 visualizer.run()
 visualizer.destroy_window()

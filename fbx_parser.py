@@ -1,10 +1,12 @@
 import sys
+reload(sys)
+sys.setdefaultencoding("gbk")
 import maya 
 import maya.standalone 
 maya.standalone.initialize(name='python')
 
 import maya.OpenMaya as om
-import maya.cmds as cmds
+import maya .cmds as cmds
 import pymel.core as pm
 import maya.mel as mel
 import numpy as np
@@ -77,7 +79,7 @@ def record_info(root, jointDict, geo_name, file_info):
         w_array = cmds.skinPercent('skinCluster1', geo_name + ".vtx[" + str(i) + "]", query=True, value=True, normalize=True)
         jname_array = mel.eval('skinCluster -query -inf skinCluster1')
         if abs(1 - np.sum(w_array)) > 1e-5:
-            print 'nnnnn'
+            print('nnnnn')
             exit(0)
         cur_line = 'skin {0} '.format(i)
         for cur_j in range(len(jname_array)):
@@ -90,12 +92,16 @@ def record_info(root, jointDict, geo_name, file_info):
             file_info.write('hier {0} {1}\n'.format(val['pa'], key))
     
 def record_obj(root, geoList, file_obj, obj_name):
-    start_v_number = 1
-    # save texture map, obj, mtl to intermediate files 
-    cmds.select(geoList[0]) # select a mesh.
-    output_filename = os.path.splitext(obj_name)[0] + '_intermediate.obj'
-    cmds.file(output_filename, force=True, op="groups=0;ptgroups=0;materials=1;smoothing=0;normals=1", typ="OBJexport", pr=True, es=True) # save the selected mesh to OBJ file   vtxIndexList = cmds.getAttr(geo + ".vrts", multiIndices=True)
-    cmds.select(clear=True)
+    for i in range(len(geoList)):
+        start_v_number = 1
+        # save texture map, obj, mtl to intermediate files
+        cmds.select(geoList[i]) # select a mesh.
+        output_filename = os.path.splitext(obj_name)[0] + '_' + str(i) + '_intermediate.obj'
+        cmds.file(output_filename, force=True,
+                  op="groups=0;ptgroups=0;materials=1;smoothing=0;normals=1",
+                  typ="OBJexport", pr=True, es=True)
+        # save the selected mesh to OBJ file   vtxIndexList = cmds.getAttr(geo + ".vrts", multiIndices=True)
+        cmds.select(clear=True)
 
     for geo in geoList:
         vtxIndexList = cmds.getAttr(geo + ".vrts", multiIndices=True)
