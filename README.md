@@ -71,10 +71,10 @@ Maya环境的配置主要参考https://zhuanlan.zhihu.com/p/367649237
 
 ​			manual_model_to_smpl: 各关节点的对应关系，dict类型
 
-	3. 填写好上述前两个变量后，第三个先为空，运行transfer.py，能够得到模型的关节点和索引的对应关系，依据这个关系填写第三个变量，再运行即可。
-	4. 运行完毕后，再通过运行vis.py文件，即可对匹配结果可视化，并生成mp4文件。
+3. 填写好上述前两个变量后，第三个先为空，运行transfer.py，能够得到模型的关节点和索引的对应关系，依据这个关系填写第三个变量，再运行即可。
+4. 运行完毕后，再通过运行vis.py文件，即可对匹配结果可视化，并生成mp4文件。
 
-##### 蒙皮代码运行流程如下：
+##### 蒙皮代码运行流程如下
 
 ​	1. 首先，从网站(如Mixamo)上下载模型的fbx文件(如model.fbx)，与fbx_parser.py放在同一个目录下，在cmd中运行	
 
@@ -84,7 +84,7 @@ Maya环境的配置主要参考https://zhuanlan.zhihu.com/p/367649237
 
 ​		可以得到model.obj, model.txt, model_intermediate.obj, model_intermediate.mtl, model.fbm这几个文件。其中，通过前两个文件可以进行匹配流程。model.fbm中的png文件是从模型解析出的texture。
 
-	2. 将model.fbm和model_intermediate.mtl放入obj_seq_5_3dmodel文件夹(运行transfer.py后会自动生成)中，可能还需要修改mtl文件中的路径为相对路径。最后运行vis.py即可。
+2. 将model.fbm和model_intermediate.mtl放入obj_seq_5_3dmodel文件夹(运行transfer.py后会自动生成)中，可能还需要修改mtl文件中的路径为相对路径。最后运行vis.py即可。
 
 ##### 对代码中关键函数的理解:
 
