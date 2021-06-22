@@ -112,7 +112,7 @@ Maya环境的配置主要参考https://zhuanlan.zhihu.com/p/367649237
 
 ​		考虑到从网上下载的模型可能存在多mesh的情况，导致fbx_parser.py解析时无法得到完整的模型，所以通过修改fbx_parser.py中record_obj函数，使得其将所有的mesh都解析出来，之后可以通过blender对多个mesh进行合并，从而解决此类问题。
 
-​		<img src="D:\TOOL\Github Desktop\pose2carton\img\newcode.png" alt="image-20210621124633445" style="zoom: 25%;" /><img src="D:\TOOL\Github Desktop\pose2carton\img\resultoutput.png" alt="image-20210621124646172" style="zoom:33%;" />
+​		<img src="img\newcode.png" alt="image-20210621124633445" style="zoom: 25%;" /><img src="img\resultoutput.png" alt="image-20210621124646172" style="zoom:33%;" />
 
 ​		脚本的修改主要是通过循环访问geoList列表中的mesh信息，并以不同的文件名生成。
 
@@ -120,7 +120,7 @@ Maya环境的配置主要参考https://zhuanlan.zhihu.com/p/367649237
 
 # 项目结果
 
-<img src="../img/176.png" alt="image" style="zoom:50%;" /><img src="D:\TOOL\Github Desktop\pose2carton\img\363.png" alt="363" style="zoom:50%;" />   
+<img src="img/176.png" alt="image" style="zoom:50%;" /><img src="img\363.png" alt="363" style="zoom:50%;" />   
 
 
 
